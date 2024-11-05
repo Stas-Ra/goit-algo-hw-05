@@ -9,7 +9,18 @@ def input_error(func):
         try:
             return func(*args, **kwargs)
         except ValueError:
-            return "Give me name and phone please."
+            return """
+            if you want to add or change a contact, enter name
+            and phone for the command.
+            And if you want to view a phone, enter a name for the command.
+            """
+        except KeyError:
+            return "This key is not relevant for the command"
+        except IndexError:
+            return """
+            I have no idea under what conditions the IndexError
+            can be called in this bot, but so be it
+            """
     return inner
 
 @input_error
@@ -26,14 +37,6 @@ def change_contact(args, contacts):
         return "Contact updated"
     else:
         return "This name not found"
-    
-def input_error(func):
-    def inner(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except ValueError:
-            return "Give me name please."
-    return inner
 
 @input_error
 def show_phone(args, contacts):
@@ -44,6 +47,7 @@ def show_phone(args, contacts):
     else:
         return "This name is not in contacts"
 
+@input_error
 def show_all(contacts):     
     result = ""
     for key, value in contacts.items():
@@ -73,7 +77,8 @@ def main():
         elif command == "all":
             print(show_all(contacts))
         else:
-            print("Invalid command.")
+            print("I am a loser bot, and not understand this command.")
 
 if __name__ == "__main__":
     main()
+    
