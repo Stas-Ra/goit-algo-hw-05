@@ -1,23 +1,26 @@
 
+from typing import Callable
 import re
 
-text = ("Загальний дохід працівника складається з декількох частин:"
+  
+text_profit = ("Загальний дохід працівника складається з декількох частин:"
         " 1000.01 як основний дохід, доповнений додатковими"
         " надходженнями 27.45 і 324.00 доларів.")
-  
-
 def generator_numbers(text):
     pattern = r"\d+\.\d+"
     for value in re.findall(pattern, text):
-        yield float(value)
+        yield value
 
-for value in generator_numbers(text):
-    value
-
-def sum_profit(text, func):
-    result = sum(func)
+def sum_profit(text, func: Callable):
+    list_profit = []
+    for value in generator_numbers(text):
+        list_profit.append(float(value))
+        result = sum(list_profit)
     return result
 
-total_income = sum_profit(text, generator_numbers(text))
-print(f"Загальний дохід: {total_income}")
+text_profit = ("Загальний дохід працівника складається з декількох частин:"
+        " 1000.01 як основний дохід, доповнений додатковими"
+        " надходженнями 27.45 і 324.00 доларів.")
 
+total_income = sum_profit(text_profit, generator_numbers)
+print(f"Загальний дохід: {total_income}")
