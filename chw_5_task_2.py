@@ -10,7 +10,7 @@ def generator_numbers(text):
 
 def sum_profit(text, funk):
     list_profit = []
-    for value in generator_numbers(text):
+    for value in funk(text):
         list_profit.append(float(value))
         result = sum(list_profit)
     return result
